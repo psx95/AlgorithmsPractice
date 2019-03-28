@@ -6,8 +6,6 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.*;
 
-import jdk.nashorn.internal.parser.Scanner;
-
 public class Solution4 {
 
     static String palinPermutation(String s) {
@@ -40,6 +38,7 @@ public class Solution4 {
         String s = scanner.nextLine();
 
         String result = palinPermutation(s);
-        System.out.println (result);        
+        System.out.println (result); 
+        scanner.close();     
     }
 }
