@@ -31,7 +31,13 @@ public class Solution3{
     }
 
     private static Node deleteNode(Node nodeToDelete) {
-        nodeToDelete = nodeToDelete.next;
+        if (nodeToDelete == null || nodeToDelete.next == null) {
+            return null;
+        } else {
+            Node next = nodeToDelete.next;
+            nodeToDelete.data = next.data;
+            nodeToDelete.next = next.next;
+        }
         return nodeToDelete;
     }
 
