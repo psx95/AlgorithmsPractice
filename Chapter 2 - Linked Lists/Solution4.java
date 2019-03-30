@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Solution4 {
     public static void main (String args[]) {
-        Scanner sc = new Scanner (System.in);
+        Scanner sc = new Scanner (System.in);        
         System.out.println ("enter the number of nodes");
         int number  = sc.nextInt();
         Node head = null;
@@ -21,45 +21,37 @@ public class Solution4 {
         System.out.println ("Enter the Partition value");
         int value = sc.nextInt();
         sc.close();
-        Node.printLinkedList(head);
         Node.printLinkedList(partitionList(head, value));
     }
 
     private static Node partitionList(Node head, int value) {
-        Node highListHead = null;
-        Node lowListHead = null;
-        Node temp = head;
-        Node highList_temp = null;
-        Node lowList_temp = null;
+        Node highListHead = null, highListEnd = null;
+        Node lowListHead = null, lowListEnd = null;
+        Node temp = head;        
         while (temp!=null) {
-            if (temp.data > value) {
+            if (temp.data >= value) {
                 if (highListHead == null) {
-                    highListHead = new Node();
-                    highListHead.data = temp.data;
-                    highListHead.next = null;
-                    highList_temp = highListHead;
+                    highListHead = temp;                
+                    highListEnd = highListHead;
                 } else {
-                    highList_temp.next = temp;
-                    highList_temp.next.next = null;
-                    highList_temp = highList_temp.next;
+                    highListEnd.next = temp;
+                    highListEnd = temp;
                 }
             } else {
                 if (lowListHead == null) {
-                    lowListHead = new Node();
-                    lowListHead.data = temp.data;
-                    lowListHead.next = null;
-                    lowList_temp = lowListHead;
+                    lowListHead = temp;
+                    lowListEnd = lowListHead;
                 } else {
-                    lowList_temp.next = temp;
-                    lowList_temp.next.next = null;
-                    lowList_temp = lowList_temp.next;                
+                    lowListEnd.next = temp;
+                    lowListEnd = temp;
                 }
             }
-            temp = temp.next;            
+            temp = temp.next;
         }
-        Node.printLinkedList(lowListHead);
-        Node.printLinkedList(highListHead);
-        lowList_temp.next = highListHead;
+        if (lowListHead == null) {
+            return highListHead;
+        } 
+        lowListEnd.next = highListHead;
         return lowListHead;
     }
 }
