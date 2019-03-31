@@ -55,11 +55,19 @@ public class Solution7  {
         Node.printLinkedList(head);
         Node.printLinkedList(head_2);
         Node intersectingPoint = isIntersecting(head, head_2);
+        System.out.println ("hash map approach");
         if (intersectingPoint == null) {
             System.out.println ("No intersecting point found");
         } else {
             Node.printLinkedList(intersectingPoint);
         }
+        System.out.println ("Without hash map O(1) space");
+        Node intersection = isIntersecting_NO_HASH(head, head_2);
+        if (intersection == null) {
+            System.out.println ("No intersection found");        
+        } else {
+            Node.printLinkedList(intersection);
+        }                    
     }   
 
     private static Node isIntersecting (Node headA, Node headB) {
@@ -76,6 +84,36 @@ public class Solution7  {
                 return runnerB;
             }
             runnerB = runnerB.next;
+        }
+        return null;
+    }
+
+    private static Node isIntersecting_NO_HASH (Node headA, Node headB) {
+        Node runnerA = headA;
+        Node runnerB = headB;
+        int lengthA = 0, lengthB = 0;
+        while (runnerA != null) {
+            runnerA = runnerA.next;
+            lengthA++;
+        }
+        while (runnerB != null) {
+            runnerB = runnerB.next;
+            lengthB++;
+        }
+        Node longerRunner = lengthA > lengthB ? headA : headB;
+        Node smallerRunner = lengthA < lengthB ? headA : headB;
+        int differenceCount = Math.abs(lengthA-lengthB);
+        while (differenceCount != 0) {
+            differenceCount--;
+            longerRunner = longerRunner.next;
+        }
+        while (longerRunner!=null) {
+            if (longerRunner == smallerRunner) {
+                return longerRunner;
+            } else {
+                longerRunner = longerRunner.next;
+                smallerRunner = smallerRunner.next;            
+            }
         }
         return null;
     }
