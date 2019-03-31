@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.util.Stack;
+
+import sun.nio.cs.ext.IBM1124;
 
 public class Solution6 {   
     public static void main (String args[]) {
@@ -22,6 +25,7 @@ public class Solution6 {
         Node.printLinkedList(head);  
         String a  = convertLinkedListToString(head);        
         System.out.println (isPalin(a));
+        System.out.println (isPalindrome_Stack(head));
     }
 
     private static boolean isPalin(String str) {
@@ -44,5 +48,30 @@ public class Solution6 {
         }
         System.out.println (builder.toString());
         return builder.toString();
+    }
+
+    private static boolean isPalindrome_Stack (Node head) {
+        Stack<Node> stack = new Stack<Node>();
+        Node fast = head;
+        Node slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            stack.push(slow);
+            slow = slow.next;            
+        }
+
+        if (fast != null) {
+            // odd number of nodes
+            slow = slow.next;
+        }
+        while (slow!=null) {
+            if (!stack.isEmpty()) {
+                if (stack.pop().data != slow.data) {
+                    return false;
+                }
+            }
+            slow = slow.next;         
+        }
+        return true;
     }
 }

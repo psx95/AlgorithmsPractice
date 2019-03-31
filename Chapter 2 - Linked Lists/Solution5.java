@@ -35,9 +35,14 @@ public class Solution5 {
         sc.close();
         Node.printLinkedList(head);
         Node.printLinkedList(_head);                
-        int num1 = formNumberFromLinkedList(head);
-        int num2 = formNumberFromLinkedList(_head);
-        Node.printLinkedList(formLinkedListFromNumber(num1+num2));
+        //int num1 = formNumberFromLinkedList(head);
+        //int num2 = formNumberFromLinkedList(_head);
+        //Node.printLinkedList(formLinkedListFromNumber(num1+num2));
+
+        // forward order 
+        int num1 = getNumberFromList_forward(head);
+        int num2 = getNumberFromList_forward(_head);
+        Node.printLinkedList(getListFromNumber_forward(num1+num2));
     }
 
     private static Node formLinkedListFromNumber (int number) {
@@ -71,4 +76,42 @@ public class Solution5 {
         return sum;
     }
 
+    // Follow UP - Numbers and list in forward order instead of reverse  
+    private static Node getListFromNumber_forward (int number) {
+        int num_dig = 0;
+        int t = number;
+        while (t!=0) {
+            t/=10;
+            num_dig++;        
+        }
+        Node head = null, temp = null;
+        while (num_dig > 0) {
+            int dig = (int)(number/(Math.pow(10, num_dig-1)));
+            number = (int) (number%Math.pow(10, num_dig-1));
+            num_dig--;
+            if (head == null) {
+                head = new Node();
+                head.data = dig;
+                head.next = null;
+                temp = head;
+            } else {
+                temp.next = new Node();
+                temp.next.data = dig;
+                temp.next.next = null;
+                temp = temp.next;
+            }
+        }
+        return head;
+    }
+
+    private static int getNumberFromList_forward (Node head) {
+        int sum = 0; 
+        Node temp = head;
+        while (temp !=null) {
+            sum *= 10;
+            sum += temp.data;
+            temp = temp.next;
+        }
+        return sum;
+    }
 }
