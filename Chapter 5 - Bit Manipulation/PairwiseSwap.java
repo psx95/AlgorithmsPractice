@@ -6,6 +6,7 @@ public class PairwiseSwap {
         String num = sc.next();
         int number = Integer.parseInt(num,2);
         System.out.println("The pairwise swapped number is "+ Integer.toBinaryString(performPairwiseSwap(number)));
+        System.out.println("Pairwise Swap (Efficient) "+Integer.toBinaryString(performSwap_Efficient(number)));
         sc.close();
     }
 
@@ -24,5 +25,14 @@ public class PairwiseSwap {
             oddCount+=2;
         }
         return num;
+    }
+
+    public static int performSwap_Efficient (int num) {
+        int oddMask = 0xAAAAAAAA; // 10101010
+        int evenMask = 0x55555555;
+        // mask all odd bits -> make all even bits 0, then right shift all masked bits by 1 to even positions  | 
+        // mask all even bits -> make all odd bits 0, then shift left by 1
+        // this will shift all masked bits to odd positions
+        return ((num & oddMask) >>> 1) | ((num & evenMask) << 1);
     }
 }
