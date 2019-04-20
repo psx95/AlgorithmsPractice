@@ -5,6 +5,7 @@ public class BinaryToString {
         System.out.println("Eneter the number between 0 and 1");
         double number = sc.nextDouble();
         System.out.println(getBinaryRepresentation(number));
+        sc.close();
     }
 
     private static String getBinaryRepresentation (double number) {
