@@ -1,4 +1,5 @@
 # Class files
 .DS_Store
 *.class
+Test*
 .vscode/
