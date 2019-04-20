@@ -12,6 +12,7 @@ public class InsertBits {
         int startPosition = sc.nextInt();
         int endPosition = sc.nextInt();
         System.out.println ("Result of insertion " + Integer.toBinaryString(insertNumber(num1, num2, startPosition, endPosition, binaryNumber1.length())));
+        sc.close();
     }
 
     private static int insertNumber (int numberInsertedIn, int numberToBeInsered, int startPosition, int endPosition, int totalLength) {
