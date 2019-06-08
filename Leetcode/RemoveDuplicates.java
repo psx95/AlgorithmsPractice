@@ -18,7 +18,6 @@ public class RemoveDuplicates
     public static int removeDuplicates(int[] nums)
     {
         int duplicates = 0;
-        int overallDuplicates = 0;
         int duplicateStartPos = -1;
         int duplicateEndPos = -1;
         int l = nums.length;
@@ -32,44 +31,38 @@ public class RemoveDuplicates
                 while (currElement == nextElement)
                 {
                     duplicates++;
-                    if (i < nums.length - 2)
+                    i++;
+                    if (i < l - 1)
                     {
-                        i++;
                         currElement = nums[i];
                         nextElement = nums[i + 1];
-                        duplicateEndPos = i + 1;
                     }
                     else
-                    {                    
-                        duplicateEndPos = i + 1;
+                    {
+                        i--;
                         break;
                     }
                 }
-                if (arrayShifted) {
-                	duplicateStartPos -= duplicates;                	
-                }                
-                shiftArray(nums, duplicateStartPos + 1, duplicateEndPos);
+                duplicateEndPos = i;
+                shiftArray(nums, duplicateStartPos + 1, duplicateEndPos + 1, l);
                 System.out.println ("Duplicates " + duplicates);
-                overallDuplicates += duplicates;
                 l = l - duplicates;
                 duplicates = 0;
-                i = duplicateEndPos - 1;
+                i = duplicateStartPos;
             }
         }
         System.out.println (Arrays.toString(nums) + "Duplicates " + duplicates);
         return l;
     }
 
-    private static void shiftArray (int[] nums, int startIndex, int startFrom)
+    private static void shiftArray (int[] nums, int startIndex, int startFrom, int length)
     {
         System.out.println ("******SHIFTING ARRAY*******");
-        System.out.println (Arrays.toString(nums) + "Start Index " + startIndex + "  Start FROM " + startFrom);
-        for (int i = startIndex; startFrom < nums.length; i++)
+        System.out.println (Arrays.toString(nums) + "Start Index " + startIndex + "  Start FROM " + startFrom + "length " + length);
+        for (int i = startIndex; startFrom < length; i++)
         {
             nums[i] = nums[startFrom++];
         }
         System.out.println ("******SHIFTING DONE*******");
-        if (!arrayShifted)
-            arrayShifted = true;
     }
 }
