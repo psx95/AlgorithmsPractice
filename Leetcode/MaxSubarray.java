@@ -1,36 +1,41 @@
 package Leetcode;
 
+import java.util.Scanner;
+
 public class MaxSubarray {
 
     public static void main(String Args[]) {
-
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number of elements");
+        int n = sc.nextInt();
+        int[] nums = new int[n];
+        System.out.println("Enter the elements");
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+        System.out.println("Maximum subarray sum is " + maxSubArray(nums));
+        sc.close();
     }
 
-    public static int maxSubArray(int[] nums) {
-        int[] dp = new int[nums.length];
-        int absoluteMax = nums[0];
-        int currentMax = nums[0];
-        int maxPos = -1;
-        for (int i = 0; i < nums.length; i++) {
-            if (i > 0) {
-                dp[i] = dp[i - 1] + nums[i];
-            } else {
-                dp[i] = nums[i];
+    private static int maxSubArray(int[] nums) {
+        int maxSoFar = Integer.MIN_VALUE, maxEndingHere = 0;
+        boolean containsZero = false;
+        int maximumElement = Integer.MIN_VALUE;
+        for (int num : nums) {
+            maxEndingHere += num;
+            if (num == 0)
+                containsZero = true;
+            if (num > maximumElement)
+                maximumElement = num;
+            if (maxEndingHere < 0) {
+                maxEndingHere = 0;
             }
-            if (dp[i] >= absoluteMax) {
-                absoluteMax = dp[i];
-                maxPos = i;
+            if (maxEndingHere > maxSoFar) {
+                maxSoFar = maxEndingHere;
             }
         }
-        currentMax = absoluteMax;
-        System.out.println("max Pos is "+maxPos + " absolute max All elems "+absoluteMax);
-
-        for (int i = 0; i < maxPos; i++) {
-            currentMax -= nums[i];
-            System.out.println("Current max "+currentMax);
-            if (currentMax > absoluteMax)
-                absoluteMax = currentMax;
-        }
-        return absoluteMax;
+        if (maxSoFar == 0 && !containsZero)
+            return maximumElement;
+        return maxSoFar;
     }
 }
